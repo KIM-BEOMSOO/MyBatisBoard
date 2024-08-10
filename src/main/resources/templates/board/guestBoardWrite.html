@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>비회원 게시판 글쓰기 화면</title>
+</head>
+<body>
+    <h1>비회원 게시판 게시글 작성 화면</h1>
+
+    <form th:action="@{/board/guestPostSave}" th:object="${GuestBoard}" method="post">
+        <label for="guestPostTitle">Title:</label>
+        <input type="text" id="guestPostTitle" name="guestPostTitle" required>
+        <br>
+        <label for="guestPostContent">Content:</label>
+        <textarea id="guestPostContent" name="guestPostContent" required></textarea>
+        <br>
+        <label for="guestPostPw">비밀번호: </label>
+        <input type="text" id="guestPostPw" name="guestPostPw" required>
+        <br>
+        <button type="submit">저장</button>
+        <a href="#" onclick="history.back(); return false;">취소</a>
+    </form>
+    <p th:text="${message}"></p>
+
+</body>
+</html>
