@@ -6,8 +6,28 @@
 </head>
 <body>
     <h1>비회원 게시판 화면</h1>
+    <table>
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Title</th>
+            <th>Content</th>
+            <th>Author</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="post : ${guestPosts}">
+            <td th:text="${post.id}"></td>
+            <td>
+                <a th:href="@{/board/guestPost/{id}(id=${post.id})}" th:text="${post.guestPostTitle}"></a>
+            </td>
+            <td th:text="${post.guestPostContent}"></td>
+            <td th:text="${post.guestPostPw}"></td>
+        </tr>
+        </tbody>
+    </table>
 
     <a th:href ="@{/}" aria-label="메인화면 이동 버튼">홈</a>
-    <a th:href ="@{/board/guestBoardWrite}" aria-label="비회원 게시판 게시글 작성 화면 이동버튼">글쓰기</a>
+    <a th:href ="@{/board/guestBoardWrite}" aria-label="비회원 게시판 게시글 작성 화면으로 이동하는 버튼">글쓰기</a>
 </body>
 </html>

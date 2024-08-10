@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>비회원 게시글 상세보기</title>
+</head>
+<body>
+
+    <h1>비회원 게시글 상세보기</h1>
+    <div>
+        <p><strong>ID:</strong> <span th:text="${guestPost.id}"></span></p>
+        <p><strong>Title:</strong> <span th:text="${guestPost.guestPostTitle}"></span></p>
+        <p><strong>Content:</strong> <span th:text="${guestPost.guestPostContent}"></span></p>
+        <p><strong>Author:</strong> <span th:text="${guestPost.guestPostPw}"></span></p>
+        <a th:href="@{/board/guestBoardWrite}" aria-label="비회원 게시판으로 이동하는 버튼">돌아가기</a>
+    </div>
+
+</body>
+</html>
