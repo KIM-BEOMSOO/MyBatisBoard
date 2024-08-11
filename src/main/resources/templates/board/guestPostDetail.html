@@ -8,11 +8,23 @@
 
     <h1>비회원 게시글 상세보기</h1>
     <div>
-        <p><strong>ID:</strong> <span th:text="${guestPost.id}"></span></p>
-        <p><strong>Title:</strong> <span th:text="${guestPost.guestPostTitle}"></span></p>
-        <p><strong>Content:</strong> <span th:text="${guestPost.guestPostContent}"></span></p>
-        <p><strong>Author:</strong> <span th:text="${guestPost.guestPostPw}"></span></p>
-        <a th:href="@{/board/guestBoardWrite}" aria-label="비회원 게시판으로 이동하는 버튼">돌아가기</a>
+        <p><strong>번호:</strong><span th:text="${guestPost.id}"></span></p>
+        <p><strong>제목:</strong> <span th:text="${guestPost.title}"></span></p>
+        <p><strong>내용:</strong> <span th:text="${guestPost.content}"></span></p>
+
+        <!--return false => 새로고침 안하도록 해주는 코드-->
+        <a href="#" onclick="history.back(); return false;">취소</a>
+        <a th:href="@{/board/guestPostModifyView/{id}(id=${guestPost.id})}">수정</a>
+
+        <form th:action="@{/board/guestPostDelete}" method="post">
+            <input type="hidden" name="id" th:value="${guestPost.id}">
+            <strong><label for="password">비밀번호:</label></strong>
+            <input type="password" id="password" name="password" required>
+            <button type="submit">삭제</button>
+        </form>
+        <div th:if="${error}" style="color: red;">
+            <p th:text="${error}"></p>
+        </div>
     </div>
 
 </body>

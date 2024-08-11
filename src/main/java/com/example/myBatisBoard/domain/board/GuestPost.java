@@ -8,8 +8,11 @@ import lombok.Setter;
 @Setter
 public class GuestPost {
     private Long id;
-    private String guestPostTitle;
-    private String guestPostContent;
-    private String guestPostPw;
+    private String title;
+    private String content;
+    private String password;
+    private String is_deleted;
+    private String created_at;
+    private String modified_at;
 }
 

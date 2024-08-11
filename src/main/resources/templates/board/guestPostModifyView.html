@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>비회원 게시글 수정화면</title>
+</head>
+<body>
+    <h1>비회원 게시글 수정화면</h1>
+       <form th:action="@{/board/guestPostModify}" th:object="${GuestBoard}" method="post">
+        <div>
+            <p>
+                <input type="hidden" name="id" th:value="${guestPost.id}"/>
+                <strong>번호:</strong> <span th:text="${guestPost.id}"></span>
+            </p>
+            <p>
+                <strong><label for="title">제목:</label></strong>
+                <input type="text" id="title" name="title" th:value="${guestPost.title}" required>
+            </p>
+            <p>
+                <strong><label for="content">내용:</label></strong>
+                <input type="text" id="content" name="content" th:value="${guestPost.content}" required>
+            </p>
+            <p>
+                <strong><label for="password">비밀번호:</label></strong>
+                <input type="text" id="password" name="password" required>
+            </p>
+            <a href="#" onclick="history.back(); return false;">취소</a>
+            <button type="submit">저장</button>
+
+            <div th:if="${error}" style="color: red;">
+                <p th:text="${error}"></p>
+            </div>
+        </div>
+    </form>
+</body>
+</html>
