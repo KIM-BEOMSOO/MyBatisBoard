@@ -11,9 +11,11 @@ import java.util.List;
 @Mapper
 public interface GuestBoardRepository {
 
+    /*Create*/
     /*비회원 게시글 등록*/
     void createGuestPost(GuestPost guestPost);
 
+    /*Read*/
     /*게시글 수량 확인*/
     int getGuestPostCount();
 
@@ -23,9 +25,11 @@ public interface GuestBoardRepository {
     /*비회원 게시글 상세보기*/
     GuestPost getGuestPostById(Long id);
 
+    /*Update*/
     /*비회원 게시글 수정*/
     void updateGuestPost(GuestPost guestPost);
 
+    /*Delete*/
     /*비회원 게시글 삭제*/
     void deleteGuestPost(Long id);
 

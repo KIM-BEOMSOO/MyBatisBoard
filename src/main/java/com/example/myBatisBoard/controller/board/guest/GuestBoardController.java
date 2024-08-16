@@ -16,17 +16,33 @@ public class GuestBoardController {
     @Autowired
     private GuestBoardService guestBoardService;
 
+    /*비회원 게시판 게시글 작성화면으로 이동*/
+    @GetMapping("guestPostWrite")
+    public String guestPostWrite(){
+        return "/board/guest/guestPostWrite";
+    }
+
+    /*Create*/
+    /*비회원 게시글 작성*/
+    @PostMapping("guestPostSave")
+    public String guestPostSave(GuestPost guestPost){
+        guestBoardService.createGuestPost(guestPost);
+        return "redirect:/board/guest/guestBoardMain";
+    }
+
+    /*테스트용 비회원 게시글 생성*/
+    @PostMapping("createMultiplePost")
+    public String createMultiplePost() {
+        guestBoardService.createMultipleGuestPost();
+        System.out.println("눌러졌습니다");
+        return "redirect:/board/guest/guestBoardMain";
+    }
+
+    /*Read*/
     /*비회원 게시판*/
     @GetMapping("guestBoardMain")
     public String guestBoardMain(Model model,
                                  @RequestParam(value = "page", defaultValue = "1") int page){
-
-        /*한 페이지에 표시할 게시글 수*/
-        int pageSize = 10;
-        int offset = (page - 1) * pageSize;
-
-        /*비회원 게시글 가져오기*/
-        List<GuestPost> guestPost = guestBoardService.getAllGuestPost(pageSize, offset);
 
         /*비회원 게시글 수량 체크*/
         int totalPost = guestBoardService.getGuestPostCount();
@@ -34,31 +50,32 @@ public class GuestBoardController {
             totalPost = 1;
         }
 
+        /*한 페이지에 표시할 게시글 수*/
+        int pageSize = 10;
         int totalPage = (int) Math.ceil((double) totalPost / pageSize);
+        int maxPages = 10;
+        int startPage = Math.max(1, page - maxPages / 2); // 페이지 범위 시작
+        int endPage = Math.min(totalPage, startPage + maxPages - 1); // 페이지 범위 끝
+        int offset = (page - 1) * pageSize;
+
+        if (endPage - startPage < maxPages - 1) {
+            startPage = Math.max(1, endPage - maxPages + 1);
+        }
+
+        /*비회원 게시글 가져오기*/
+        List<GuestPost> guestPost = guestBoardService.getAllGuestPost(pageSize, offset);
 
         model.addAttribute("guestPost", guestPost);
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPage", totalPage);
         model.addAttribute("pageSize", pageSize);
         model.addAttribute("totalPost", totalPost);
+        model.addAttribute("startPage", startPage);
+        model.addAttribute("endPage", endPage);
 
         System.out.println("totalPage => " +  totalPage);
 
         return "/board/guest/guestBoardMain";
-    }
-
-    /*비회원 게시판 게시글 작성화면으로 이동*/
-    @GetMapping("guestPostWrite")
-    public String guestPostWrite(){
-        return "/board/guest/guestPostWrite";
-    }
-
-
-    /*비회원 게시글 저장*/
-    @PostMapping("guestPostSave")
-    public String guestPostSave(GuestPost guestPost){
-        guestBoardService.createGuestPost(guestPost);
-        return "redirect:/board/guest/guestBoardMain";
     }
 
     /*비회원 게시글 상세보기*/
@@ -80,6 +97,7 @@ public class GuestBoardController {
             return "/board/guest/guestPostModify";
         }
 
+    /*Update*/
     /*비회원 게시글 수정*/
     @PostMapping("guestPostModify")
     public String guestPostModify(GuestPost guestPost,
@@ -98,6 +116,7 @@ public class GuestBoardController {
         }
     }
 
+    /*Delete*/
     /*비회원 게시글 삭제*/
     @PostMapping("guestPostDelete")
     public String guestPostDelete(GuestPost guestPost,

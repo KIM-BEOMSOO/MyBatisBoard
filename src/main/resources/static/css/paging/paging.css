@@ -1,0 +1,4 @@
+/* 페이지 링크 사이에 5px 간격을 추가 */
+.page-link {
+    margin-right: 5px;
+}
