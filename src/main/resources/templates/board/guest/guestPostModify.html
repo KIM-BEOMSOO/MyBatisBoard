@@ -6,11 +6,15 @@
 </head>
 <body>
     <h1>비회원 게시글 수정화면</h1>
-       <form th:action="@{/board/guestPostModify}" th:object="${GuestBoard}" method="post">
+       <form th:action="@{/board/guest/guestPostModify}" th:object="${GuestBoard}" method="post">
         <div>
             <p>
                 <input type="hidden" name="id" th:value="${guestPost.id}"/>
                 <strong>번호:</strong> <span th:text="${guestPost.id}"></span>
+            </p>
+            <p>
+                <input type="hidden" name="name" th:value="${guestPost.name}"/>
+                <strong>작성자:</strong> <span th:text="${guestPost.name}"></span>
             </p>
             <p>
                 <strong><label for="title">제목:</label></strong>
@@ -22,7 +26,7 @@
             </p>
             <p>
                 <strong><label for="password">비밀번호:</label></strong>
-                <input type="text" id="password" name="password" required>
+                <input type="password" id="password" name="password" required>
             </p>
             <a href="#" onclick="history.back(); return false;">취소</a>
             <button type="submit">저장</button>

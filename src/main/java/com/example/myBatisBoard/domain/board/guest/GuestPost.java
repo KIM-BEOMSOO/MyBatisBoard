@@ -1,4 +1,4 @@
-package com.example.myBatisBoard.domain.board;
+package com.example.myBatisBoard.domain.board.guest;
 
 
 import lombok.Getter;
@@ -8,6 +8,7 @@ import lombok.Setter;
 @Setter
 public class GuestPost {
     private Long id;
+    private String name;
     private String title;
     private String content;
     private String password;

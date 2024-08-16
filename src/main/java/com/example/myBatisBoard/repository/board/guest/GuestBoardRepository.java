@@ -1,7 +1,7 @@
-package com.example.myBatisBoard.repository.board;
+package com.example.myBatisBoard.repository.board.guest;
 
 
-import com.example.myBatisBoard.domain.board.GuestPost;
+import com.example.myBatisBoard.domain.board.guest.GuestPost;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -9,7 +9,7 @@ import java.util.List;
 
 
 @Mapper
-public interface BoardRepository {
+public interface GuestBoardRepository {
 
     /*비회원 게시글 등록*/
     void createGuestPost(GuestPost guestPost);

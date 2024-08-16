@@ -1,19 +1,16 @@
-package com.example.myBatisBoard.service;
+package com.example.myBatisBoard.service.board.guest;
 
-import com.example.myBatisBoard.domain.board.GuestPost;
-import com.example.myBatisBoard.repository.board.BoardRepository;
+import com.example.myBatisBoard.domain.board.guest.GuestPost;
+import com.example.myBatisBoard.repository.board.guest.GuestBoardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class BoardService {
-
-
-
+public class GuestBoardService {
     @Autowired
-    private BoardRepository boardRepository;
+    private GuestBoardRepository boardRepository;
 
     /*비회원 게시글 쓰기*/
     public void createGuestPost(GuestPost guestPost){
@@ -30,14 +27,14 @@ public class BoardService {
         return boardRepository.getGuestPostById(id);
     };
 
-    /*비회원 게시글 수정*/
-    public void updateGuestPost(GuestPost guestPost){
-        boardRepository.updateGuestPost(guestPost);
-    }
-
     /*비회원 게시글 Count*/
     public int getGuestPostCount() {
         return boardRepository.getGuestPostCount();
+    }
+
+    /*비회원 게시글 수정*/
+    public void updateGuestPost(GuestPost guestPost){
+        boardRepository.updateGuestPost(guestPost);
     }
 
     /*비회원 게시글 삭제*/

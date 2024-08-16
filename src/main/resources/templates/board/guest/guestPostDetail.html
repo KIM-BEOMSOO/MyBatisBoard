@@ -9,14 +9,15 @@
     <h1>비회원 게시글 상세보기</h1>
     <div>
         <p><strong>번호:</strong><span th:text="${guestPost.id}"></span></p>
+        <p><strong>작성자:</strong><span th:text="${guestPost.name}"></span></p>
         <p><strong>제목:</strong> <span th:text="${guestPost.title}"></span></p>
         <p><strong>내용:</strong> <span th:text="${guestPost.content}"></span></p>
 
         <!--return false => 새로고침 안하도록 해주는 코드-->
         <a href="#" onclick="history.back(); return false;">취소</a>
-        <a th:href="@{/board/guestPostModifyView/{id}(id=${guestPost.id})}">수정</a>
+        <a th:href="@{/board/guest/guestPostModify/{id}(id=${guestPost.id})}">수정</a>
 
-        <form th:action="@{/board/guestPostDelete}" method="post">
+        <form th:action="@{/board/guest/guestPostDelete}" method="post">
             <input type="hidden" name="id" th:value="${guestPost.id}">
             <strong><label for="password">비밀번호:</label></strong>
             <input type="password" id="password" name="password" required>

@@ -2,18 +2,24 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.example.myBatisBoard.repository.board.BoardRepository">
+<mapper namespace="com.example.myBatisBoard.repository.board.guest.GuestBoardRepository">
+
+    <!-- 비회원 게시글 쓰기 -->
+    <insert id="createGuestPost" parameterType="GuestPost">
+        INSERT INTO guestPost (name, title, content, password)
+        VALUES (#{name}, #{title}, #{content}, #{password})
+    </insert>
 
     <!--비회원 게시판 게시글 전체출력-->
     <select id="getAllGuestPost" resultType="GuestPost">
-        <!--비회원 게시판 게시글 전체출력-->
         SELECT
-            id
-            ,title
-            ,content
-            ,password
-            ,DATE_FORMAT(created_at, '%Y-%m-%d') AS created_at
-            ,DATE_FORMAT(modified_at, '%Y-%m-%d') AS modified_at
+        id
+        ,name
+        ,title
+        ,content
+        ,password
+        ,DATE_FORMAT(created_at, '%Y-%m-%d') AS created_at
+        ,DATE_FORMAT(modified_at, '%Y-%m-%d') AS modified_at
         FROM guestPost
         WHERE is_deleted ='N'
         ORDER BY id DESC
@@ -26,12 +32,6 @@
         WHERE is_deleted ='N'
     </select>
 
-    <!-- 비회원 게시글 쓰기 -->
-    <insert id="createGuestPost" parameterType="GuestPost">
-        INSERT INTO guestPost (title, content, password)
-        VALUES (#{title}, #{content}, #{password})
-    </insert>
-
     <!--비회원 게시글 상세보기-->
     <select id="getGuestPostById" resultType="GuestPost">
         SELECT * FROM guestPost
@@ -42,7 +42,8 @@
     <!--비회원 게시글 수정-->
     <update id="updateGuestPost" parameterType="GuestPost">
         UPDATE guestPost
-        SET title = #{title}
+        SET name = #{name}
+            ,title = #{title}
             ,content = #{content}
             ,password = #{password}
         WHERE

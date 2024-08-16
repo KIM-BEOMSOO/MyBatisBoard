@@ -7,11 +7,14 @@
 <body>
     <h1>비회원 게시판 게시글 작성 화면</h1>
 
-    <form th:action="@{/board/guestPostSave}" th:object="${GuestBoard}" method="post">
-        <label for="title">Title:</label>
+    <form th:action="@{/board/guest/guestPostSave}" th:object="${GuestBoard}" method="post">
+        <label for="name">작성자:</label>
+        <input type="text" id="name" name="name" required>
+        <br>
+        <label for="title">제목:</label>
         <input type="text" id="title" name="title" required>
         <br>
-        <label for="content">Content:</label>
+        <label for="content">내용:</label>
         <textarea id="content" name="content" required></textarea>
         <br>
         <label for="password">비밀번호: </label>

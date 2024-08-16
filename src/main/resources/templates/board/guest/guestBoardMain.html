@@ -10,6 +10,7 @@
         <thead>
         <tr>
             <th>번호</th>
+            <th>작성자</th>
             <th>제목</th>
             <th>내용</th>
             <th>날짜</th>
@@ -18,22 +19,27 @@
         <tbody>
         <tr th:each="post, number: ${guestPost}" th:if="${post.is_deleted != 'Y'}">
             <td>
-                <a th:href="@{/board/guestPostDetail/{id}(id=${post.id})}"
+                <a th:href="@{/board/guest/guestPostDetail/{id}(id=${post.id})}"
                    th:text="${totalPost - ((currentPage - 1) * pageSize + number.index)}">
                 </a>
             </td>
             <td>
-                <a th:href="@{/board/guestPostDetail/{id}(id=${post.id})}"
+                <a th:href="@{/board/guest/guestPostDetail/{id}(id=${post.id})}"
+                   th:text="${post.name}">
+                </a>
+            </td>
+            <td>
+                <a th:href="@{/board/guest/guestPostDetail/{id}(id=${post.id})}"
                    th:text="${post.title}">
                 </a>
             </td>
             <td >
-                <a th:href="@{/board/guestPostDetail/{id}(id=${post.id})}"
+                <a th:href="@{/board/guest/guestPostDetail/{id}(id=${post.id})}"
                    th:text="${post.content}">
                 </a>
             </td>
             <td>
-                <a th:href="@{/board/guestPostDetail/{id}(id=${post.id})}"
+                <a th:href="@{/board/guest/guestPostDetail/{id}(id=${post.id})}"
                     th:text="${post.created_at}">
                 </a>
             </td>
@@ -43,11 +49,11 @@
 
 
     <a th:href ="@{/}" aria-label="메인화면 이동 버튼">홈</a>
-    <a th:href ="@{/board/guestPostWrite}" aria-label="비회원 게시판 게시글 작성 화면으로 이동하는 버튼">글쓰기</a>
+    <a th:href ="@{/board/guest/guestPostWrite}" aria-label="비회원 게시판 게시글 작성 화면으로 이동하는 버튼">글쓰기</a>
 
     <div>
         <a th:each="pageNum : ${#numbers.sequence(1, totalPage)}"
-           th:href="@{/board/guestBoardMain(page=${pageNum})}"
+           th:href="@{/board/guest/guestBoardMain(page=${pageNum})}"
            th:text="${pageNum}"></a>
     </div>
 </body>
