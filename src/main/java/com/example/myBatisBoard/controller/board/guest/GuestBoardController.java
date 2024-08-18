@@ -2,6 +2,8 @@ package com.example.myBatisBoard.controller.board.guest;
 
 import com.example.myBatisBoard.domain.board.guest.GuestPost;
 import com.example.myBatisBoard.service.board.guest.GuestBoardService;
+import com.example.myBatisBoard.util.paging.PagingHelper;
+import com.example.myBatisBoard.util.paging.PagingInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -34,7 +36,6 @@ public class GuestBoardController {
     @PostMapping("createMultiplePost")
     public String createMultiplePost() {
         guestBoardService.createMultipleGuestPost();
-        System.out.println("눌러졌습니다");
         return "redirect:/board/guest/guestBoardMain";
     }
 
@@ -42,38 +43,20 @@ public class GuestBoardController {
     /*비회원 게시판*/
     @GetMapping("guestBoardMain")
     public String guestBoardMain(Model model,
-                                 @RequestParam(value = "page", defaultValue = "1") int page){
+                                 @RequestParam(value = "currentPage", defaultValue = "1") int currentPage){
 
         /*비회원 게시글 수량 체크*/
         int totalPost = guestBoardService.getGuestPostCount();
-        if(totalPost == 0){
-            totalPost = 1;
-        }
 
-        /*한 페이지에 표시할 게시글 수*/
-        int pageSize = 10;
-        int totalPage = (int) Math.ceil((double) totalPost / pageSize);
-        int maxPages = 10;
-        int startPage = Math.max(1, page - maxPages / 2); // 페이지 범위 시작
-        int endPage = Math.min(totalPage, startPage + maxPages - 1); // 페이지 범위 끝
-        int offset = (page - 1) * pageSize;
-
-        if (endPage - startPage < maxPages - 1) {
-            startPage = Math.max(1, endPage - maxPages + 1);
-        }
+        /*페이징*/
+        PagingInfo pagingInfo = PagingHelper.calculatePaging(totalPost, currentPage);
 
         /*비회원 게시글 가져오기*/
-        List<GuestPost> guestPost = guestBoardService.getAllGuestPost(pageSize, offset);
+        List<GuestPost> guestPost = guestBoardService.getAllGuestPost(pagingInfo.getPageSize(), pagingInfo.getOffset());
 
-        model.addAttribute("guestPost", guestPost);
-        model.addAttribute("currentPage", page);
-        model.addAttribute("totalPage", totalPage);
-        model.addAttribute("pageSize", pageSize);
         model.addAttribute("totalPost", totalPost);
-        model.addAttribute("startPage", startPage);
-        model.addAttribute("endPage", endPage);
-
-        System.out.println("totalPage => " +  totalPage);
+        model.addAttribute("pagingInfo", pagingInfo);
+        model.addAttribute("guestPost", guestPost);
 
         return "/board/guest/guestBoardMain";
     }
@@ -93,7 +76,6 @@ public class GuestBoardController {
                                   Model model){
             GuestPost guestPost = guestBoardService.getGuestPostById(id);
             model.addAttribute("guestPost", guestPost);
-            System.out.println("id => " + guestPost.getId());
             return "/board/guest/guestPostModify";
         }
 

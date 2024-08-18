@@ -22,7 +22,7 @@
         <tr th:each="post, number: ${guestPost}" th:if="${post.is_deleted != 'Y'}">
             <td>
                 <a th:href="@{/board/guest/guestPostDetail/{id}(id=${post.id})}"
-                   th:text="${totalPost - ((currentPage - 1) * pageSize + number.index)}">
+                   th:text="${totalPost - ((pagingInfo.getCurrentPage - 1) * pagingInfo.getPageSize + number.index)}">
                 </a>
             </td>
             <td>
@@ -49,33 +49,29 @@
         </tbody>
     </table>
 
-
     <a th:href ="@{/}" aria-label="메인화면 이동 버튼">홈</a>
     <a th:href ="@{/board/guest/guestPostWrite}" aria-label="비회원 게시판 게시글 작성 화면으로 이동하는 버튼">글쓰기</a>
     <form th:action ="@{/board/guest/createMultiplePost}" method="post">
         <button type="submit" aria-label="테스트용 비회원 게시글 생성 버튼">테스트 게시글 생성</button>
     </form>
 
-
     <div>
-        <!-- 이전 페이지 링크 -->
-        <a th:if="${currentPage > 1}" th:href="@{/board/guest/guestBoardMain(page=${currentPage - 1})}" class="page-link">
+        <!--이전 페이지 링크-->
+        <a th:if="${pagingInfo.currentPage > 1}"
+           th:href="@{/board/guest/guestBoardMain(currentPage=${pagingInfo.currentPage - 1})}" class="page-link">
             &lt;
         </a>
 
-        <!-- 페이지 링크들 -->
-        <a th:each="pageNum : ${#numbers.sequence(startPage, endPage)}"
-           th:href="@{/board/guest/guestBoardMain(page=${pageNum})}"
-           th:text="${pageNum}" class="page-link"
-           th:classappend="${pageNum == currentPage} ? 'active' : ''"></a>
+        <!--페이지 링크들-->
+        <a th:each="pageNum : ${#numbers.sequence(pagingInfo.startPage, pagingInfo.endPage)}"
+           th:href="@{/board/guest/guestBoardMain(currentPage=${pageNum})}"
+           th:text="${pageNum}" class="page-link"></a>
 
-        <!-- 다음 페이지 링크 -->
-        <a th:if="${currentPage < totalPage}" th:href="@{/board/guest/guestBoardMain(page=${currentPage + 1})}" class="page-link">
+        <!--다음 페이지 링크-->
+        <a th:if="${pagingInfo.currentPage < pagingInfo.totalPage}"
+           th:href="@{/board/guest/guestBoardMain(currentPage=${pagingInfo.currentPage + 1})}" class="page-link">
             &gt;
         </a>
     </div>
-
-
-
 </body>
 </html>

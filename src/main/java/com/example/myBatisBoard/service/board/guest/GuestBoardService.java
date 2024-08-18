@@ -2,6 +2,7 @@ package com.example.myBatisBoard.service.board.guest;
 
 import com.example.myBatisBoard.domain.board.guest.GuestPost;
 import com.example.myBatisBoard.repository.board.guest.GuestBoardRepository;
+import com.example.myBatisBoard.util.paging.PagingInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -36,4 +37,5 @@ public interface GuestBoardService{
     /*Delete*/
     /*비회원 게시글 삭제*/
     public void deleteGuestPost(Long id);
+
 }
