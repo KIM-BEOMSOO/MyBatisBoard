@@ -18,6 +18,9 @@ public class GuestBoardController {
     @Autowired
     private GuestBoardService guestBoardService;
 
+    @Autowired
+    private PagingHelper pagingHelper;
+
     /*비회원 게시판 게시글 작성화면으로 이동*/
     @GetMapping("guestPostWrite")
     public String guestPostWrite(){
@@ -49,7 +52,7 @@ public class GuestBoardController {
         int totalPost = guestBoardService.getGuestPostCount();
 
         /*페이징*/
-        PagingInfo pagingInfo = PagingHelper.calculatePaging(totalPost, currentPage);
+        PagingInfo pagingInfo = pagingHelper.calculatePaging(totalPost, currentPage);
 
         /*비회원 게시글 가져오기*/
         List<GuestPost> guestPost = guestBoardService.getAllGuestPost(pagingInfo.getPageSize(), pagingInfo.getOffset());

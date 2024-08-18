@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 @NoArgsConstructor
 public class PagingHelper {
 
-    public static PagingInfo calculatePaging(int totalPost, int currentPage) {
+    public PagingInfo calculatePaging(int totalPost, int currentPage) {
         int pageSize = 10; /*한 화면에 보여줄 게시글*/
         int maxPages = 10; /*최대 표출 페이지 수*/
 
